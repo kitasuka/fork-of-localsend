@@ -11,6 +11,9 @@ dependencies:
   common:
     path: ../common
   path: 1.9.0
+  crypto:
+  cryptography:
+  cryptography_flutter:
 
 dev_dependencies:
   lints: ^2.0.0
