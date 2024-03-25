@@ -11,9 +11,8 @@ dependencies:
   common:
     path: ../common
   path: 1.9.0
-  crypto:
-  cryptography:
-  cryptography_flutter:
+  crypto: ^3.0.3
+  webcrypto: ^0.5.6
 
 dev_dependencies:
   lints: ^2.0.0

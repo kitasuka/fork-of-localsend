@@ -4,9 +4,10 @@ import 'package:args/args.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:crypto/crypto.dart';
+import 'package:webcrypto/webcrypto.dart';
 import 'dart:convert'; // for the utf8.encode method
 import 'dart:typed_data';
-// import 'package:cryptography/cryptography.dart';
+// import 'package:cryptography/cryptography.dart'; // これはcryptoとの相性が悪い
 
 Future<void> main(List<String> arguments) async {
   final parser = ArgParser();
@@ -26,19 +27,32 @@ Future<void> main(List<String> arguments) async {
   final send = results['send'] as bool;
 
   // DH鍵共有 key
-  // TODO ? import 'package:cryptography/cryptography.dart';
-  // TODO ? import 'package:cryptography/cryptography_flutter.dart';
-  /*
-  final algorithm = Ecdh.p256();
-  final aliceKeyPair = await algorithm.newKeyPair();
-  final bobKeyPair = await algorithm.newKeyPair();
-  final bobPublicKey = await bobKeyPair.extractPublicKey();
-  final sharedSecretKey = await algorithm.sharedSecretKey(
-    keyPair: aliceKeyPair,
-    remotePublicKey: bobPublicKey,
-  );
-  print(sharedSecretKey);
-  */
+  // Fundamental Elliptic Curve Cryptography Algorithms (RFC6090, Feb. 2011)
+  // Future<KeyPair<EcdhPrivateKey, EcdhPublicKey>> generateKey(EllipticCurve curve)
+  var aliceKeyPair = await EcdhPrivateKey.generateKey(EllipticCurve.p256);
+  var alicePrivateKey = aliceKeyPair.privateKey;
+  var alicePublicKey = aliceKeyPair.publicKey;
+  print(aliceKeyPair);
+  print(alicePrivateKey);
+  print(alicePublicKey);
+  var rawAlicePrivateKey = await alicePrivateKey.exportPkcs8Key();
+  var rawAlicePublicKey = await alicePublicKey.exportRawKey();
+  print("rawAlicePrivateKey: $rawAlicePrivateKey");
+  print("rawAlicePublicKey: $rawAlicePublicKey");
+
+  var bobKeyPair = await EcdhPrivateKey.generateKey(EllipticCurve.p256);
+  var bobPrivateKey = bobKeyPair.privateKey;
+  var bobPublicKey = bobKeyPair.publicKey;
+  var rawBobPrivateKey = await bobPrivateKey.exportPkcs8Key();
+  var rawBobPublicKey = await bobPublicKey.exportRawKey();
+  print("rawBobPrivateKey: ${rawBobPrivateKey.length} $rawBobPrivateKey");
+  print("rawBobPublicKey: ${rawBobPublicKey.length} $rawBobPublicKey");
+
+  var aliceBits = await alicePrivateKey.deriveBits(256, bobPublicKey);
+  var bobBits = await bobPrivateKey.deriveBits(256, alicePublicKey);
+  print("aliceBits: ${aliceBits.length} $aliceBits");
+  print("bobBits  : ${bobBits.length} $bobBits");
+
   var key = utf8.encode("foobar"); // key of HOTP
   var counter = 0x0123456789abcdef; // counter of HOTP; Dart int: 8 bytes
 
