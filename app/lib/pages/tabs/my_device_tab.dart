@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/send_mode.dart';
 import 'package:localsend_app/pages/selected_files_page.dart';
-import 'package:localsend_app/pages/tabs/send_tab_vm.dart';
+import 'package:localsend_app/pages/tabs/my_device_tab_vm.dart';
 import 'package:localsend_app/pages/troubleshoot_page.dart';
 import 'package:localsend_app/provider/animation_provider.dart';
 import 'package:localsend_app/provider/network/nearby_devices_provider.dart';
@@ -38,10 +38,10 @@ class MyDeviceTab extends StatelessWidget { // TODO
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder(
-      provider: sendTabVmProvider, // TODO
+      provider: myDeviceTabVmProvider, // TODO
       init: (context, ref) {
         // ignore: discarded_futures
-        ref.dispatchAsync(SendTabInitAction(context));
+        ref.dispatchAsync(MyDeviceTabInitAction(context));
       },
       builder: (context, vm) {
         final ref = context.ref;
@@ -53,7 +53,7 @@ class MyDeviceTab extends StatelessWidget { // TODO
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
                 child: Text(
-                  t.sendTab.selection.title,
+                  t.sendTab.selection.title, // TODO
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -89,7 +89,7 @@ class MyDeviceTab extends StatelessWidget { // TODO
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        t.sendTab.selection.title,
+                        t.sendTab.selection.title, // TODO
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 5),
@@ -159,26 +159,12 @@ class MyDeviceTab extends StatelessWidget { // TODO
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(/*t.sendTab.nearbyDevices*/"私のデバイス", style: Theme.of(context).textTheme.titleMedium), // TODO
+                    child: Text(/*t.myDevice.nearbyDevices*/"私のデバイス", style: Theme.of(context).textTheme.titleMedium), // TODO
                   ),
                 ),
                 const SizedBox(width: 10),
                 _ScanButton(
                   ips: vm.localIps,
-                ),
-                Tooltip(
-                  message: t.dialogs.addressInput.title,
-                  child: CustomIconButton(
-                    onPressed: () async => vm.onTapAddress(context),
-                    child: const Icon(Icons.ads_click),
-                  ),
-                ),
-                Tooltip(
-                  message: t.dialogs.favoriteDialog.title,
-                  child: CustomIconButton(
-                    onPressed: () async => await vm.onTapFavorite(context),
-                    child: const Icon(Icons.favorite),
-                  ),
                 ),
                 _SendModeButton(
                   onSelect: (mode) async => vm.onTapSendMode(context, mode),
@@ -496,7 +482,7 @@ class _MultiSendDeviceListTile extends StatelessWidget {
   final Device device;
   final bool isFavorite;
   final String? nameOverride;
-  final SendTabVm vm;
+  final MyDeviceTabVm vm;
 
   const _MultiSendDeviceListTile({
     required this.device,
