@@ -10,6 +10,7 @@ import desktop_drop
 import device_info_plus
 import dynamic_color
 import file_selector_macos
+import flutter_secure_storage_macos
 import gal
 import in_app_purchase_storekit
 import macos_dock_progress
@@ -33,6 +34,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   DynamicColorPlugin.register(with: registry.registrar(forPlugin: "DynamicColorPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
+  FlutterSecureStoragePlugin.register(with: registry.registrar(forPlugin: "FlutterSecureStoragePlugin"))
   GalPlugin.register(with: registry.registrar(forPlugin: "GalPlugin"))
   InAppPurchasePlugin.register(with: registry.registrar(forPlugin: "InAppPurchasePlugin"))
   MacosDockProgressPlugin.register(with: registry.registrar(forPlugin: "MacosDockProgressPlugin"))

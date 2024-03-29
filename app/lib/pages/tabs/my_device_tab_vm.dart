@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:localsend_app/model/cross_file.dart';
 import 'package:localsend_app/model/persistence/favorite_device.dart';
 import 'package:localsend_app/model/send_mode.dart';
@@ -54,6 +55,7 @@ final myDeviceTabVmProvider = ViewProvider((ref) {
   final localIps = ref.watch(localIpProvider).localIps;
   final nearbyDevices = ref.watch(nearbyDevicesProvider).devices.values;
   final favoriteDevices = ref.watch(favoritesProvider);
+  final storage = new FlutterSecureStorage(); // TODO
 
   return MyDeviceTabVm(
     sendMode: sendMode,

@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_drop
   dynamic_color
   file_selector_linux
+  flutter_secure_storage_linux
   gtk
   pasteboard
   screen_retriever

@@ -30,6 +30,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_markdown: 0.6.19
+  flutter_secure_storage: ^9.0.0
   gal: 2.3.0
   image_picker: 1.0.7
   in_app_purchase: 3.1.13 # [FOSS_REMOVE]
